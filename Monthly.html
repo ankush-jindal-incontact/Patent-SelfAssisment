@@ -1,0 +1,72 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="dropdown" style="margin-left:60%; margin-top: 20px;">
+  <button class="btn btn-primary dropdown-toggle"  type="button" data-toggle="dropdown">Report Type
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="Today.html">Today</a></li>
+    <li><a href="Yesterday.html">Yesterday</a></li>
+    <li><a href="Last7Days.html">Last 7 Days</a></li>
+    <!--<li><a href="Monthly.html">Monthly</a></li>--> 
+  </ul>
+</div>
+</div>
+<div style="height: 80%; width: 90%;padding-left: 5%; padding-top:100px">
+  <canvas id="myChart" width="1143" height="571" style="display: block; box-sizing: border-box; height: 381px; width: 762px;"></canvas>
+</div>
+
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'MONTHLY DATA FOR YEAR 2022',
+      data: [65, 59, 80, 81, 56, 55, 57,67,78,77,90,85],
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1,
+    },
+    {
+      data: [
+              {x: null, y: null}, {x: 'February', y: 58}, {x: null, y: null},{x: null, y: null},
+              {x: null, y: null}, {x: 'June', y: 54}, {x: null, y: null},{x: null, y: null},
+              {x: null, y: null}, {x: 'October', y: 76}, {x: null, y: null},{x: null, y: null},
+              {x: null, y: null}, {x: 'December', y: 84}, {x: null, y: null},{x: null, y: null},
+            ],
+      label: 'TRAINING',
+      borderColor: 'rgb(255, 0, 0)',
+    }]
+  };
+
+  new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: {
+      plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        debugger;
+                        let label = context.dataset.label || '';
+
+                        if (label && label=='TRAINING') {
+                            label += ': ';
+                        
+                        if (context.parsed.y !== null) {
+                            label = 'Training';
+                        }
+                      }
+                        return label;
+                    }
+                }
+            }
+        }
+    },
+  });
+</script>

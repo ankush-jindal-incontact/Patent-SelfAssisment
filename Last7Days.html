@@ -1,0 +1,69 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="dropdown" style="margin-left:60%; margin-top: 20px;">
+  <button class="btn btn-primary dropdown-toggle"  type="button" data-toggle="dropdown">Report Type
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="Today.html">Today</a></li>
+    <li><a href="Yesterday.html">Yesterday</a></li>
+    <!--<li><a href="Last7Days.html">Last 7 Days</a></li>--> 
+    <li><a href="Monthly.html">Monthly</a></li>
+  </ul>
+</div>
+</div>
+<div style="height: 80%; width: 90%;padding-left: 5%; padding-top:100px">
+  <canvas id="myChart" width="1143" height="571" style="display: block; box-sizing: border-box; height: 381px; width: 762px;"></canvas>
+</div>
+
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  const labels = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday'];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'WEEKLY DATA',
+      data: [0,89,75,60,80,85],
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1,
+    },
+    {
+      data: [
+              {x: null, y: null}, {x: 'Wednesday', y: 59}, {x: null, y: null},{x: null, y: null},
+            ],
+      label: 'TRAINING',
+      borderColor: 'rgb(255, 0, 0)',
+    }]
+  };
+
+  new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: {
+      plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        debugger;
+                        let label = context.dataset.label || '';
+
+                        if (label && label=='TRAINING') {
+                            label += ': ';
+                        
+                        if (context.parsed.y !== null) {
+                            label = 'Training';
+                        }
+                      }
+                        return label;
+                    }
+                }
+            }
+        }
+    },
+  });
+</script>
